@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 
-import '../../core/colors.dart';
-
 class TicketInfoRow extends StatelessWidget {
   final String title;
   final String value;
-  final bool isHighlighted;
 
   const TicketInfoRow({
     super.key,
     required this.title,
     required this.value,
-    this.isHighlighted = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
+      padding:
+          const EdgeInsets.only(
         bottom: 14,
       ),
+
       child: Row(
         mainAxisAlignment:
-            MainAxisAlignment.spaceBetween,
+            MainAxisAlignment
+                .spaceBetween,
+
         children: [
           Text(
             title,
@@ -30,13 +30,12 @@ class TicketInfoRow extends StatelessWidget {
               color: Colors.grey,
             ),
           ),
+
           Text(
             value,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: isHighlighted
-                  ? AppColors.primary
-                  : Colors.black,
+            style: const TextStyle(
+              fontWeight:
+                  FontWeight.bold,
             ),
           ),
         ],

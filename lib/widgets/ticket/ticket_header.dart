@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../core/colors.dart';
+import '../common/app_card.dart';
+
 class TicketHeader extends StatelessWidget {
   const TicketHeader({
     super.key,
@@ -7,30 +10,44 @@ class TicketHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        Icon(
-          Icons.check_circle,
-          size: 90,
-          color: Colors.green,
-        ),
-        SizedBox(height: 16),
-        Text(
-          'Booking Successful',
-          style: TextStyle(
-            fontSize: 26,
-            fontWeight:
-                FontWeight.bold,
+    return AppCard(
+      color: Colors.green.shade50,
+
+      child: Column(
+        children: [
+          CircleAvatar(
+            radius: 35,
+            backgroundColor:
+                Colors.green.shade100,
+
+            child: const Icon(
+              Icons.check_circle,
+              color: Colors.green,
+              size: 42,
+            ),
           ),
-        ),
-        SizedBox(height: 8),
-        Text(
-          'Your ticket is ready',
-          style: TextStyle(
-            color: Colors.grey,
+
+          const SizedBox(height: 16),
+
+          const Text(
+            'Booking Successful',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-      ],
+
+          const SizedBox(height: 8),
+
+          Text(
+            'Your snorkeling ticket is ready.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.grey.shade700,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

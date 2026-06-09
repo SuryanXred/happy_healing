@@ -184,7 +184,7 @@ class _PaymentScreenState
               participants:
                   booking.participants,
 
-              totalPrice:
+              totalPayment:
                   formatPrice(
                 booking.totalPrice,
               ),

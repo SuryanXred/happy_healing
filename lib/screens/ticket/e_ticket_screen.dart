@@ -27,102 +27,133 @@ class ETicketScreen extends StatelessWidget {
     ).format(price);
   }
 
+  String generateBookingId() {
+    return 'HH-${booking.route.id}-${booking.date.day}${booking.date.month}${booking.date.year}';
+  }
+
   @override
   Widget build(BuildContext context) {
+    final formattedDate =
+        DateFormat(
+          'dd MMM yyyy',
+        ).format(
+          booking.date,
+        );
+
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor:
+          AppColors.background,
 
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.transparent,
+
+        backgroundColor:
+            Colors.transparent,
+
         centerTitle: true,
 
         title: const Text(
           'E-Ticket',
+
           style: TextStyle(
             color: Colors.black,
           ),
         ),
 
-        iconTheme: const IconThemeData(
+        iconTheme:
+            const IconThemeData(
           color: Colors.black,
         ),
       ),
 
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(
-          AppSize.padding,
-        ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding:
+              const EdgeInsets.all(
+            AppSize.padding,
+          ),
 
-        child: Column(
-          crossAxisAlignment:
-              CrossAxisAlignment.start,
+          child: Column(
+            crossAxisAlignment:
+                CrossAxisAlignment
+                    .start,
 
-          children: [
+            children: [
 
-            /// SUCCESS HEADER
-            const TicketHeader(),
+              /// SUCCESS HEADER
+              const TicketHeader(),
 
-            const SizedBox(
-              height: AppSize.sectionGap,
-            ),
-
-            /// TICKET INFO
-            TicketInfoCard(
-              route: booking.route,
-              date: booking.date,
-              session: booking.session,
-              participants:
-                  booking.participants,
-            ),
-
-            const SizedBox(
-              height: AppSize.sectionGap,
-            ),
-
-            /// QR CODE
-            const TicketQrCard(),
-
-            const SizedBox(
-              height: AppSize.sectionGap,
-            ),
-
-            /// TICKET SUMMARY
-            TicketSummary(
-              routeName:
-                  booking.route.name,
-
-              bookingId:
-                  'HH-${booking.route.id}-001',
-
-              date: DateFormat(
-                'dd MMM yyyy',
-              ).format(
-                booking.date,
+              const SizedBox(
+                height:
+                    AppSize.sectionGap,
               ),
 
-              session:
-                  booking.session,
+              /// TICKET INFORMATION
+              TicketInfoCard(
+                route:
+                    booking.route,
 
-              participants:
-                  booking.participants,
+                date:
+                    booking.date,
 
-              paymentMethod:
-                  'QRIS Payment',
+                session:
+                    booking.session,
 
-              paymentStatus:
-                  'Paid',
-
-              totalPrice:
-                  formatPrice(
-                booking.totalPrice,
+                participants:
+                    booking
+                        .participants,
               ),
-            ),
 
-            const SizedBox(
-              height: AppSize.sectionGap,
-            ),
-          ],
+              const SizedBox(
+                height:
+                    AppSize.sectionGap,
+              ),
+
+              /// QR CODE
+              const TicketQrCard(),
+
+              const SizedBox(
+                height:
+                    AppSize.sectionGap,
+              ),
+
+              /// BOOKING SUMMARY
+              TicketSummary(
+                routeName:
+                    booking.route.name,
+
+                bookingId:
+                    generateBookingId(),
+
+                date:
+                    formattedDate,
+
+                session:
+                    booking.session,
+
+                participants:
+                    booking
+                        .participants,
+
+                paymentMethod:
+                    'QRIS Payment',
+
+                paymentStatus:
+                    'Paid',
+
+                totalPrice:
+                    formatPrice(
+                  booking
+                      .totalPrice,
+                ),
+              ),
+
+              const SizedBox(
+                height:
+                    AppSize.sectionGap,
+              ),
+            ],
+          ),
         ),
       ),
     );

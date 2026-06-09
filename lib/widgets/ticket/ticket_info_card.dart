@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import '../../core/constants.dart';
 
 import '../../models/route_model.dart';
-import '../payment/info_row.dart';
+
+import '../common/app_card.dart';
+
+import 'ticket_info_row.dart';
 
 class TicketInfoCard extends StatelessWidget {
   final RouteModel route;
@@ -19,37 +25,69 @@ class TicketInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding:
-          const EdgeInsets.all(20),
-
-      decoration: BoxDecoration(
-        color: Colors.white,
-
-        borderRadius:
-            BorderRadius.circular(24),
-      ),
-
+    return AppCard(
       child: Column(
+        crossAxisAlignment:
+            CrossAxisAlignment.start,
+
         children: [
-
-          InfoRow(
-            title: 'Route',
-            value: route.name,
+          const Text(
+            'Ticket Information',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight:
+                  FontWeight.bold,
+            ),
           ),
 
-          InfoRow(
+          const SizedBox(height: 20),
+
+          Row(
+            children: [
+              ClipRRect(
+                borderRadius:
+                    BorderRadius.circular(
+                  AppSize.radius,
+                ),
+
+                child: Image.network(
+                  route.image,
+                  width: 90,
+                  height: 90,
+                  fit: BoxFit.cover,
+                ),
+              ),
+
+              const SizedBox(width: 16),
+
+              Expanded(
+                child: Text(
+                  route.name,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight:
+                        FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 24),
+
+          TicketInfoRow(
             title: 'Date',
-            value:
-                '${date.day}/${date.month}/${date.year}',
+            value: DateFormat(
+              'dd MMM yyyy',
+            ).format(date),
           ),
 
-          InfoRow(
+          TicketInfoRow(
             title: 'Session',
             value: session,
           ),
 
-          InfoRow(
+          TicketInfoRow(
             title: 'Participants',
             value:
                 '$participants Person',

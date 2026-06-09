@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import '../../core/colors.dart';
+import '../../core/constants.dart';
 
 import '../../models/booking_model.dart';
-import '../../core/colors.dart';
 
+import '../common/app_card.dart';
 import 'info_row.dart';
 
 class BookingSummaryCard extends StatelessWidget {
@@ -13,22 +17,24 @@ class BookingSummaryCard extends StatelessWidget {
     required this.booking,
   });
 
+  String formatPrice(int price) {
+    return NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+      decimalDigits: 0,
+    ).format(price);
+  }
+
+  String formatDate(DateTime date) {
+    return DateFormat(
+      'dd MMM yyyy',
+      'id_ID',
+    ).format(date);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 8,
-          ),
-        ],
-      ),
-
+    return AppCard(
       child: Column(
         crossAxisAlignment:
             CrossAxisAlignment.start,
@@ -43,106 +49,134 @@ class BookingSummaryCard extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 20),
-
-          Row(
-            children: [
-              ClipRRect(
-                borderRadius:
-                    BorderRadius.circular(
-                  18,
-                ),
-
-                child: Image.network(
-                  booking.route.image,
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.cover,
-                ),
-              ),
-
-              const SizedBox(width: 16),
-
-              Expanded(
-                child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment
-                          .start,
-
-                  children: [
-                    Text(
-                      booking.route.name,
-
-                      style:
-                          const TextStyle(
-                        fontSize: 20,
-                        fontWeight:
-                            FontWeight
-                                .bold,
-                      ),
-                    ),
-
-                    const SizedBox(
-                      height: 8,
-                    ),
-
-                    Text(
-                      booking
-                          .route
-                          .difficulty,
-
-                      style:
-                          const TextStyle(
-                        color:
-                            Colors.grey,
-                      ),
-                    ),
-
-                    const SizedBox(
-                      height: 10,
-                    ),
-
-                    Text(
-                      'Rp ${booking.route.price}',
-
-                      style: TextStyle(
-                        color:
-                            AppColors
-                                .primary,
-
-                        fontWeight:
-                            FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+          const SizedBox(
+            height: AppSize.sectionGap,
           ),
 
-          const SizedBox(height: 24),
+          _RouteInfo(
+            image:
+                booking.route.image,
+            name:
+                booking.route.name,
+            difficulty:
+                booking.route.difficulty,
+            price: formatPrice(
+              booking.route.price,
+            ),
+          ),
 
-          InfoRow(
+          const SizedBox(
+            height: AppSize.sectionGap,
+          ),
+
+          TicketInfoRow(
             title: 'Date',
-
-            value:
-                '${booking.date.day}/${booking.date.month}/${booking.date.year}',
+            value: formatDate(
+              booking.date,
+            ),
           ),
 
-          InfoRow(
+          TicketInfoRow(
             title: 'Session',
-
             value: booking.session,
           ),
 
-          InfoRow(
+          TicketInfoRow(
             title: 'Participants',
-
             value:
                 '${booking.participants} Person',
           ),
         ],
       ),
+    );
+  }
+}
+
+class _RouteInfo extends StatelessWidget {
+  final String image;
+  final String name;
+  final String difficulty;
+  final String price;
+
+  const _RouteInfo({
+    required this.image,
+    required this.name,
+    required this.difficulty,
+    required this.price,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        ClipRRect(
+          borderRadius:
+              BorderRadius.circular(
+            AppSize.radius,
+          ),
+
+          child: Image.network(
+            image,
+            width: 100,
+            height: 100,
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        const SizedBox(
+          width: AppSize.itemGap,
+        ),
+
+        Expanded(
+          child: Column(
+            crossAxisAlignment:
+                CrossAxisAlignment
+                    .start,
+
+            children: [
+              Text(
+                name,
+
+                style:
+                    const TextStyle(
+                  fontSize: 20,
+                  fontWeight:
+                      FontWeight.bold,
+                ),
+              ),
+
+              const SizedBox(
+                height: 8,
+              ),
+
+              Text(
+                difficulty,
+
+                style:
+                    const TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+
+              const SizedBox(
+                height: 10,
+              ),
+
+              Text(
+                price,
+
+                style: TextStyle(
+                  color:
+                      AppColors.primary,
+
+                  fontWeight:
+                      FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

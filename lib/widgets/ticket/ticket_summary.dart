@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../widgets/booking/summary_row.dart';
+import '../common/app_card.dart';
+import 'ticket_info_row.dart';
 
 class TicketSummary extends StatelessWidget {
   final String routeName;
@@ -26,22 +27,14 @@ class TicketSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
-      ),
-
+    return AppCard(
       child: Column(
         crossAxisAlignment:
             CrossAxisAlignment.start,
 
         children: [
-
           const Text(
-            'Ticket Summary',
+            'Booking Summary',
             style: TextStyle(
               fontSize: 18,
               fontWeight:
@@ -49,67 +42,41 @@ class TicketSummary extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
 
-          SummaryRow(
-            title: 'Route',
-            value: routeName,
-          ),
-
-          const SizedBox(
-            height: 12,
-          ),
-
-          SummaryRow(
+          TicketInfoRow(
             title: 'Booking ID',
             value: bookingId,
           ),
 
-          const SizedBox(
-            height: 12,
+          TicketInfoRow(
+            title: 'Route',
+            value: routeName,
           ),
 
-          SummaryRow(
+          TicketInfoRow(
             title: 'Date',
             value: date,
           ),
 
-          const SizedBox(
-            height: 12,
-          ),
-
-          SummaryRow(
+          TicketInfoRow(
             title: 'Session',
             value: session,
           ),
 
-          const SizedBox(
-            height: 12,
-          ),
-
-          SummaryRow(
+          TicketInfoRow(
             title: 'Participants',
             value:
                 '$participants Person',
           ),
 
-          const SizedBox(
-            height: 12,
-          ),
-
-          SummaryRow(
-            title: 'Payment Method',
+          TicketInfoRow(
+            title: 'Payment',
             value: paymentMethod,
           ),
 
-          const SizedBox(
-            height: 12,
-          ),
-
-          SummaryRow(
-            title: 'Payment Status',
+          TicketInfoRow(
+            title: 'Status',
             value: paymentStatus,
           ),
 
@@ -117,10 +84,10 @@ class TicketSummary extends StatelessWidget {
             height: 30,
           ),
 
-          SummaryRow(
+          TicketInfoRow(
             title: 'Total Payment',
             value: totalPrice,
-            isTotal: true,
+            isHighlighted: true,
           ),
         ],
       ),
